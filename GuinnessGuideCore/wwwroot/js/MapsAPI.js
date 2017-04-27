@@ -1,0 +1,51 @@
+﻿$(document).ready(function () {
+    Initialize();
+});
+
+
+function Initialize() {
+
+    google.maps.visualRefresh = true;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+    }
+
+};
+
+
+function showPosition(position) {
+    var currentPosition = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    console.log("Position");
+    console.log(currentPosition);
+    var mapOptions = {
+        zoom: 14,
+        center: currentPosition,
+        mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
+    };
+
+    var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+    var marker = new google.maps.Marker({
+        position: currentPosition,
+        map: map
+    });
+
+}
+
+function showError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation.");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            console.log("An unknown error occurred.");
+            break;
+    }
+}
