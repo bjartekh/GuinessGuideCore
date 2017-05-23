@@ -15,50 +15,62 @@ var SearchButton = React.createClass({
 var SearchInput = React.createClass({
 
     componentDidMount: function () {
-        this.renderEasyComplete();
+
+        if (this.initComplete == false) {
+            this.renderEasyComplete();
+            this.initComplete = true;
+        }
     },
     componentDidUpdate: function () {
-        this.renderEasyComplete();
+        console.log("Update");
     },
+
+    initComplete : false,
 
     options: {
 
-        url: "content/cities.json",
+      /*  url: "content/cities.json",*/
 
-        getValue: "name",
+        data: ["Arendal", "Bergen", "Oslo", "Test"],
 
+      /*  getValue: function (element) {
+            return element.city;
+        },*/
+        
         list: {
             match: {
                 enabled: true
             },
-            maxNumberOfElements: 8
+            maxNumberOfElements: 16
         },
-
+        
         template: {
-            type: "custom",
-            method: function (value, item) {
-                return "<span class='flag flag-" + (item.code).toLowerCase() + "' ></span>" + value;
+            type: "description",
+            fields: {
+                description: "country"
             }
         },
-
         theme: "round"
     },
 
     render: function () {
+        
         console.log(this.options);
         console.log(this.props);
         return (
             <div className="input-group">
-                <input ref="ezycomplete" type="text" className="form-control" placeholder="city / country / pub / store..." />
+                <input ref={(input) => {this.searchInput = input; }}  type="text" className="form-control" placeholder="city / countri / pub / store..." />
                 <SearchButton />
            </div>
         );
     },
 
     renderEasyComplete: function () {
-        $(this.refs.ezycomplete).html(
-            this.props.autocomplete(this.options)
-        );
+/*        console.log(this.searchInput);
+        console.log(EasyAutocomplete);
+        console.log($(this.searchInput));*/
+        $(this.searchInput).easyAutocomplete(this.options);
+
     }
 });
 
@@ -67,6 +79,7 @@ var SearchInput = React.createClass({
 
 
 ReactDOM.render(
-    <SearchInput autocomplete={() => this.EasyAutocomplete} />,                    
+/*    <SearchInput autocomplete={() => this.easyAutocomplete} />,                    */
+    <SearchInput />,                    
     document.getElementById('content')
 );

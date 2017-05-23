@@ -4,6 +4,7 @@
   "directory" : "wwwroot/lib",
   "dependencies": {
     "jquery": "3.1.1",
-    "bootstrap": "3.3.7"
+    "bootstrap": "3.3.7",
+    "react-select" : "^0.9.1"
   }
 }
