@@ -1,4 +1,9 @@
-﻿/* http://tech.oyster.com/using-react-and-jquery-together/ */ 
+﻿/* http://tech.oyster.com/using-react-and-jquery-together/ */
+
+import Select from 'react-select';
+
+
+
 var SearchButton = React.createClass({
 
    
@@ -12,7 +17,30 @@ var SearchButton = React.createClass({
     }
 });
 
+
+
+var getOptions = function (input, callback) {
+    setTimeout(function () {
+        callback(null, {
+            options: [
+                { value: 'one', label: 'One' },
+                { value: 'two', label: 'Two' }
+            ],
+            // CAREFUL! Only set this to true when there are no more options,
+            // or more specific queries will not be sent to the server.
+            complete: true
+        });
+    }, 500);
+};
+
+<Select.Async
+    name="form-field-name"
+    loadOptions={getOptions}
+/>
+
 var SearchInput = React.createClass({
+
+    
 
     componentDidMount: function () {
 
